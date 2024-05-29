@@ -1,0 +1,15 @@
+{
+    "name": "ductong/fpoly-base-web3014",
+    "autoload": {
+        "psr-4": {
+            "Ductong\\FpolyBaseWeb3014\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tống Văn Đức",
+            "email": "tongduc315@gmail.com"
+        }
+    ],
+    "require": {}
+}
