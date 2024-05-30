@@ -16,12 +16,12 @@
     Ví dụ Repo có link HTTP là: ```https://github.com/tongvanduc/fpoly-base-web3014.git```
 
     ```
-        git init
-        git add .
-        git commit -m "first commit"
-        git branch -M main
-        git remote add origin https://github.com/tongvanduc/fpoly-base-web3014.git
-        git push -u origin main
+    git init
+    git add .
+    git commit -m "first commit"
+    git branch -M main
+    git remote add origin https://github.com/tongvanduc/fpoly-base-web3014.git
+    git push -u origin main
     ```
 
     Nếu chạy lệnh ```git push -u origin main``` mà thấy xuất hiện dòng ```git push --set-upstream ....``` thì các em cần copy cái lệnh set-upstream đó để chạy. Vì lần đầu push code lên Repo nó hay như vậy.
@@ -33,9 +33,9 @@
 2. Chạy tập lệnh sau:
 
     ```
-        git add .
-        git commit -m "Mô tả thay đổi vào đây"
-        git push
+    git add .
+    git commit -m "Mô tả thay đổi vào đây"
+    git push
     ```
 
 ## GIT IGNORE
