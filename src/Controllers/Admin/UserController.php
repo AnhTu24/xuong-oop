@@ -3,6 +3,7 @@
 namespace Ductong\FpolyBaseWeb3014\Controllers\Admin;
 
 use Ductong\FpolyBaseWeb3014\Commons\Controller;
+use Ductong\FpolyBaseWeb3014\Commons\Helper;
 use Ductong\FpolyBaseWeb3014\Models\User;
 
 class UserController extends Controller
@@ -16,6 +17,8 @@ class UserController extends Controller
 
     public function index()
     {
+        Helper::debug($this->user->findByID(93));
+
         echo __CLASS__ . '@' . __FUNCTION__;
     }
 
