@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "Ductong\\FpolyBaseWeb3014\\": "src/"
-        }
+        },
+        "files": [
+            "helper.php"
+        ]
     },
     "authors": [
         {
