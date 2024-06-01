@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-        Helper::debug($this->user->findByID(93));
+        Helper::debug($this->user->all());
 
         echo __CLASS__ . '@' . __FUNCTION__;
     }
