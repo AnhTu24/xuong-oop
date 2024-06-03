@@ -23,6 +23,8 @@
         @endphp
     @endif
 
+    <a href="{{ url("admin/users/create") }}" class="btn btn-primary">Thêm mới</a>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -42,7 +44,7 @@
                     <td>{{ $user['id'] }}</td>
                     <td>{{ $user['name'] }}</td>
                     <td>
-                        <img src="{{ asset($user['avatar']) }}" width="100px" alt="">
+                        <img src="{{ show_upload($user['avatar']) }}" width="100px" alt="">
                     </td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['created_at'] }}</td>
