@@ -51,6 +51,7 @@
                     <td>{{ $user['updated_at'] }}</td>
                     <td>
                         <a href="{{ url("admin/users/{$user['id']}/show") }}" class="btn btn-info">Xem</a>
+                        <a href="{{ url("admin/users/{$user['id']}/edit") }}" class="btn btn-warning">Sửa</a>
                         <a href="{{ url("admin/users/{$user['id']}/delete") }}"
                             onclick="return confirm('Chắc chắn xóa không?');" class="btn btn-danger">Xóa</a>
                     </td>

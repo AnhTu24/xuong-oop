@@ -37,6 +37,7 @@ class UserController extends Controller
         $validation = $validator->make($_POST + $_FILES, [
             'name'                  => 'required|max:50',
             'email'                 => 'required|email',
+            'password'              => 'required|max:50',
             'avatar'                => 'uploaded_file:0,2048K,png,jpeg,jpg',
         ]);
         $validation->validate();
@@ -53,7 +54,7 @@ class UserController extends Controller
                 'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             ];
 
-            if (!empty($_FILES['avatar'])) {
+            if (!empty($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
 
                 $from = $_FILES['avatar']['tmp_name'];
                 $to   = 'uploads/' . time() . $_FILES['avatar']['name'];
@@ -89,12 +90,66 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        echo __CLASS__ . '@' . __FUNCTION__ . ' - ID = ' . $id;
+        $user = $this->user->findByID($id);
+        
+        $this->renderViewAdmin('users.edit', [
+            'user' => $user
+        ]);
     }
 
     public function update($id)
     {
-        echo __CLASS__ . '@' . __FUNCTION__ . ' - ID = ' . $id;
+        $user = $this->user->findByID($id);
+
+        // VALIDATE
+        $validator = new Validator;
+        $validation = $validator->make($_POST + $_FILES, [
+            'name'                  => 'required|max:50',
+            'email'                 => 'required|email',
+            'password'              => 'max:50',
+            'avatar'                => 'uploaded_file:0,2048K,png,jpeg,jpg',
+        ]);
+        $validation->validate();
+
+        if ($validation->fails()) {
+            $_SESSION['errors'] = $validation->errors()->firstOfAll();
+
+            header('Location: ' . url('admin/users/create'));
+            exit;
+        } else {
+            $data = [
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'] ? password_hash($_POST['password'], PASSWORD_DEFAULT) : $_POST['password'],
+            ];
+
+            if (!empty($_FILES['avatar']) && $_FILES['avatar']['size'] > 0) {
+
+                $from = $_FILES['avatar']['tmp_name'];
+                $to   = 'uploads/' . time() . $_FILES['avatar']['name'];
+
+                if (move_uploaded_file($from, PATH_ASSET . $to)) {
+                    $data['avatar'] = $to;
+                } else {
+                    $_SESSION['errors']['avatar'] = 'Upload KHÔNG thành công!';
+
+                    header('Location: ' . url("admin/users/$id/edit"));
+                    exit;
+                }
+            }
+
+            $this->user->update($id, $data);
+
+            if ($user['avatar'] && file_exists( PATH_ASSET . $user['avatar'] ) ) {
+                unlink(PATH_ASSET . $user['avatar']);
+            }
+
+            $_SESSION['status'] = true;
+            $_SESSION['msg'] = 'Thao tác thành công!';
+
+            header('Location: ' . url("admin/users/$id/edit"));
+            exit;
+        }
     }
 
     public function delete($id)
