@@ -17,9 +17,11 @@ class UserController extends Controller
 
     public function index()
     {
-        Helper::debug($this->user->all());
+        $users = $this->user->all();
 
-        echo __CLASS__ . '@' . __FUNCTION__;
+        $this->renderViewAdmin('users.index', [
+            'users' => $users
+        ]);
     }
 
     public function create()
@@ -34,7 +36,11 @@ class UserController extends Controller
 
     public function show($id)
     {
-        echo __CLASS__ . '@' . __FUNCTION__ . ' - ID = ' . $id;
+        $user = $this->user->findByID($id);
+
+        $this->renderViewAdmin('users.show', [
+            'user' => $user
+        ]);
     }
 
     public function edit($id)
@@ -49,7 +55,15 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $this->user->delete($id);
+        try {
+            $this->user->delete($id);
+
+            $_SESSION['status'] = true;
+            $_SESSION['msg'] = 'Thao tác thành công!';
+        } catch (\Throwable $th) {
+            $_SESSION['status'] = false;
+            $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
+        }
 
         header('Location: ' . url('admin/users'));
         exit();
