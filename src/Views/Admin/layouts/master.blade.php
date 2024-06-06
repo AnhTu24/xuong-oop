@@ -19,7 +19,7 @@
     <div class="container">
         <nav class="mt-5">
             <a href="{{ url('admin') }}">Dashboard</a>
-            <a href="{{ url('admin/users') }}">Quản lý Người dùng</a>
+            <a href="{{ url('admin/products') }}">Quản lý Sản phẩm</a>
         </nav>
 
         <h1 class="mt-5 mb-3 text-center">@yield('title')</h1>

@@ -48,19 +48,25 @@ class Model
 
     public function paginate($page = 1, $perPage = 5)
     {
-        $totalPage = ceil($this->count() / $perPage);
-
+        $queryBuilder = clone $this->queryBuilder;
+        $totalCount = $this->count(); // Use $totalCount for consistency
+        $totalPage = ceil($totalCount / $perPage);
         $offset = $perPage * ($page - 1);
 
-        $data = $this->queryBuilder
-        ->select('*')
-        ->from($this->tableName)
-        ->setFirstResult($offset)
-        ->setMaxResults($perPage)
-        ->orderBy('id', 'desc')
-        ->fetchAllAssociative();
+        $data = $queryBuilder
+            ->select('*')
+            ->from($this->tableName)
+            ->setFirstResult($offset)
+            ->setMaxResults($perPage)
+            ->orderBy('id', 'desc')
+            ->fetchAllAssociative();
 
-        return [$data, $totalPage];
+        return [
+            'data' => $data,
+            'totalPage' => $totalPage,
+            'currentPage' => $page,
+            'totalRecords' => $totalCount
+        ];
     }
 
     public function findByID($id)
